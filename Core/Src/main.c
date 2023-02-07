@@ -58,9 +58,43 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/*volatile unsigned int "myPointer = ("volatile unsigned int *)0x2001fffd(보내고자하는 주소를 입력해야함, 예를 들어 d(4bite));
+//address와 read 주면 result 아니면 else return
+ int memory(int addr, int data, int RnW) {
+	static int buffer[256];
+	int result;
+	if(RnW){ //read action
+		result = buffer[addr];
+	}
+	else { //write action
+		buffer[addr] = data;
+	}
+	return result;
+} */
+
+
+
+
 //동작주기용 변수
 int taskA;
 int taskB;
+//volatile uint32_t *taskA ... 여기도 할당
+/*typedef struct {
+	int taskA;
+	int taskB;
+	...> 구조체로 변경해서 사용하면 전역변수 앞에 wSystem
+	하고 uart.c에도 구조체를 넣어서 구조체 안에 구조체.. -> 구조체를 모듈화
+typedef struct{
+int taska;
+int taskb;
+uint8....
+moter,,,
+
+void에도
+static uart_t *uart;
+wSystem.uart = usrt;
+wStstem이라는 전역변수 하나에 모든 것을 다 넣은 형태임(ex 터치스크린 개발 시)
+};*/
 //스위치용 함수
 uint32_t bufferSwitch;
 uint8_t stateSwitch;
@@ -152,7 +186,7 @@ int main(void)
 		taskB = 100;
 		static _Bool flagStateBuzzer;
 		flagStateBuzzer ^= 1;
-		flagStateBuzzer == 0? enableBuzzer() : disableBuzzer();
+		flagStateBuzzer == 0 ? enableBuzzer() : disableBuzzer();
 		//todo 다음에 수정할 코드입니다.(나중에 뭔가 추가를 하겠다고 생각이 들면 todo 작업을 해주면 됨)(task에 뜬다)
 	}
 	/* if(HAL_GPIO_ReadPin(SW_GPIO_Port, SW_Pin) == 0){
